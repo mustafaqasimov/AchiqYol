@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+    <include file="changelog-master.xml" relativeToChangelogFile="true"/>
+    <changeSet id="demo-001" author="achiqyol">
+        <comment>Fictional demo data; not verified accessibility information.</comment>
+        <sqlFile path="changes/002-demo.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>

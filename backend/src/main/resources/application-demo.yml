@@ -1,0 +1,4 @@
+# Explicit opt-in: use only with a development/demo database.
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/changelog-demo.xml

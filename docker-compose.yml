@@ -20,6 +20,7 @@ services:
   backend:
     build: ./backend
     environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-}
       DB_URL: ${DB_URL:-jdbc:postgresql://postgres:5432/achiqyol}
       DB_USER: ${DB_USER:-achiqyol}
       DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD}

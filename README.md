@@ -131,3 +131,29 @@ frontend/tsconfig.json
 - Production frontend HTTP request: 200.
 - Backend tests: not executed; compiler reports `release version 21 not supported`. This machine has a Java 21 runtime but no Java 21 javac; the package installer cannot run because sudo is unavailable. The Docker build uses a full Java 21 JDK.
 - Full Compose startup, database migration execution, browser accessibility audit and native PWA install have not been verified.
+
+## Mock data / Demo məlumatlar
+
+`.env` faylına əlavə edin:
+
+```env
+SPRING_PROFILES_ACTIVE=demo
+```
+
+Sonra:
+
+```sh
+git pull origin main
+docker compose up --build -d
+```
+
+Demo profilində Liquibase 4 uydurma Bakı məkanı, 2 istifadəçi və 6 rəy əlavə edir.
+Sahil kafesi 4.5 (yaşıl), Şəhər kitabxanası 3 (sarı), Köhnə pilləkənli mağaza
+1.5 (qırmızı), Yeni park isə rəysiz (boz) göstərilir. Bütün nümunələr DEMO kimi
+işarələnib; bunlar real əlçatanlıq iddiaları deyil.
+
+Liquibase dəyişiklik tarixçəsi sayəsində restart zamanı məlumatlar təkrarlanmır.
+Mövcud məkanlar dəyişdirilmir. Redis-də əvvəlki siyahı varsa, ən çox 2 dəqiqə
+sonra yenilə. Demo profilini söndürmək üçün dəyəri boşalt və backend-i yenidən
+başlat; artıq bazaya yazılmış demo məlumatlar avtomatik silinmir. Demo profilini
+production bazasında aktivləşdirmə.
