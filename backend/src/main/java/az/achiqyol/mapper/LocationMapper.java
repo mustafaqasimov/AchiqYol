@@ -1,0 +1,2 @@
+package az.achiqyol.mapper;
+import org.mapstruct.*; import az.achiqyol.entity.entities.Location; import az.achiqyol.dto.request.LocationRequest; @Mapper(componentModel="spring",unmappedTargetPolicy=ReportingPolicy.ERROR) public interface LocationMapper { @Mapping(target="id",ignore=true) Location toEntity(LocationRequest request); @Mapping(target="id",ignore=true) void update(LocationRequest request,@MappingTarget Location location); }

@@ -1,0 +1,2 @@
+package az.achiqyol.service.interfaces;
+import az.achiqyol.dto.request.LocationRequest; import az.achiqyol.dto.response.LocationResponse; import java.util.List; public interface LocationService { List<LocationResponse> list(int page,int size); LocationResponse get(Long id); LocationResponse create(LocationRequest request); LocationResponse update(Long id,LocationRequest request); void delete(Long id); }

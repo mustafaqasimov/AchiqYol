@@ -1,0 +1,2 @@
+package az.achiqyol.entity.entities;
+import jakarta.persistence.*; import lombok.*; @Entity @Table(name="reviews") @Getter @Setter @NoArgsConstructor public class Review { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; @ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="location_id",nullable=false) private Location location; @ManyToOne(fetch=FetchType.LAZY) @JoinColumn(name="user_id",nullable=false) private User user; private int rating; private String comment; }

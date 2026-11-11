@@ -1,0 +1,2 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+body {margin:0;background:#f5f7f4;color:#16342d;font-family:Arial,sans-serif} button,input,select {min-height:48px} button {cursor:pointer} :focus-visible {outline:3px solid #1668db;outline-offset:4px} .leaflet-container {height:100%;width:100%;z-index:0}

@@ -1,0 +1,2 @@
+package az.achiqyol.dto.request;
+import jakarta.validation.constraints.*; public record LocationRequest(@NotBlank @Size(max=120) String name, @NotNull @Size(max=2000) String description, @NotNull @DecimalMin("-90") @DecimalMax("90") Double latitude, @NotNull @DecimalMin("-180") @DecimalMax("180") Double longitude) {}
