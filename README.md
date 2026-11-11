@@ -44,7 +44,7 @@ For host development, provide reachable PostgreSQL and Redis ports; Compose deli
 
 The WatchList repository was inspected: service/interfaces, service/impl, dto/request, dto/response and entity/entities are mirrored. The singular repository directory follows the explicit AchiqYol requirement (WatchList uses repositories).
 
-Stitch access was blocked by network policy. This is an original Azerbaijani map-first interface, not a verified reproduction. It uses text rating labels, a map-equivalent list, labelled controls, visible focus and 48px controls. Full WCAG conformance has not been audited.
+The frontend now adapts the supplied Stitch HTML: lavender surfaces, green actions, status chips, map pins, cards, and bottom navigation. The supplied SVG is used for the explicitly labelled design demo. External photos and Material font icons are replaced with local SVG illustrations/icons. It uses text rating labels, a map-equivalent list, labelled controls, visible focus and 48px controls. Full WCAG conformance has not been audited.
 
 Ratings are calculated from reviews: green >=4, yellow >=2.5, red below 2.5, grey without reviews. Users and reviews have entities, repositories and database tables; registration and review submission endpoints are not implemented. Initial data is empty. The UI displays the first 100 locations; API pagination supports page and size. Redis list caches expire after two minutes and CRUD invalidates them.
 
@@ -157,3 +157,22 @@ Mövcud məkanlar dəyişdirilmir. Redis-də əvvəlki siyahı varsa, ən çox 2
 sonra yenilə. Demo profilini söndürmək üçün dəyəri boşalt və backend-i yenidən
 başlat; artıq bazaya yazılmış demo məlumatlar avtomatik silinmir. Demo profilini
 production bazasında aktivləşdirmə.
+
+## Stitch design preview (no backend required)
+
+```sh
+cd frontend
+npm ci
+npm run dev
+```
+
+Open `http://localhost:3000/?demo=1`, or click **Dizayn demosu**. This browser demo
+is separate from the backend Liquibase demo profile. It uses fictional sample
+places and the supplied schematic SVG; live mode still uses the API and Leaflet.
+Search, status filters, map selection, list/detail navigation and local bookmarks
+work. Experience/report forms save and restore browser-local drafts only. Route
+and account dialogs explicitly identify services that are not implemented.
+
+Validation: production build passed; Chromium desktop (1440px) and mobile (390px)
+checks passed for filters, search, details, bookmarks, dialogs, draft submission,
+and horizontal overflow. Full accessibility certification is not claimed.

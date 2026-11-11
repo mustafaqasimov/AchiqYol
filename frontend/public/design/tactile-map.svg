@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" viewBox="0 0 800 1000">
+<defs>
+<!-- Sidewalk Tactile Pattern (Braille-inspired dots) -->
+<pattern height="16" id="tactile-paving" patternUnits="userSpaceOnUse" width="16">
+<circle cx="8" cy="8" fill="#047857" opacity="0.35" r="2.5"></circle>
+</pattern>
+<!-- Pedestrian Crosswalk Hatching -->
+<pattern height="20" id="crosswalk" patternTransform="rotate(45)" patternUnits="userSpaceOnUse" width="20">
+<line stroke="#dae2fd" stroke-width="6" x1="0" x2="0" y1="0" y2="20"></line>
+</pattern>
+<!-- Building Outline Hatching -->
+<pattern height="10" id="block-texture" patternUnits="userSpaceOnUse" width="10">
+<rect fill="#f2f3ff" height="10" width="10"></rect>
+<circle cx="2" cy="2" fill="#bdc9c1" opacity="0.5" r="1"></circle>
+</pattern>
+</defs>
+<!-- Land Blocks -->
+<rect fill="#eaedff" height="1000" width="800" x="0" y="0"></rect>
+<!-- City Building Blocks -->
+<rect fill="url(#block-texture)" height="260" rx="16" width="220" x="40" y="50"></rect>
+<rect fill="url(#block-texture)" height="200" rx="16" width="460" x="300" y="40"></rect>
+<rect fill="url(#block-texture)" height="340" rx="16" width="240" x="520" y="280"></rect>
+<rect fill="url(#block-texture)" height="320" rx="16" width="220" x="40" y="370"></rect>
+<rect fill="url(#block-texture)" height="260" rx="16" width="180" x="300" y="480"></rect>
+<rect fill="url(#block-texture)" height="220" rx="16" width="440" x="40" y="740"></rect>
+<rect fill="url(#block-texture)" height="300" rx="16" width="240" x="520" y="660"></rect>
+<!-- Park Green Sanctuary Area -->
+<path d="M 40,750 Q 150,710 260,740 T 480,750 L 480,960 L 40,960 Z" fill="#97f5cc" opacity="0.4"></path>
+<circle cx="120" cy="840" fill="#047857" opacity="0.25" r="30"></circle>
+<circle cx="220" cy="880" fill="#047857" opacity="0.2" r="45"></circle>
+<circle cx="380" cy="850" fill="#047857" opacity="0.25" r="36"></circle>
+<!-- Primary Roads / Corridors -->
+<!-- Vertical Central Avenue -->
+<rect fill="#dae2fd" height="1000" width="60" x="250" y="0"></rect>
+<!-- Tactile Sidewalk East -->
+<rect fill="url(#tactile-paving)" height="1000" width="14" x="242" y="0"></rect>
+<!-- Tactile Sidewalk West -->
+<rect fill="url(#tactile-paving)" height="1000" width="14" x="304" y="0"></rect>
+<!-- Horizontal Major Boulevard -->
+<rect fill="#dae2fd" height="70" width="800" x="0" y="310"></rect>
+<rect fill="url(#tactile-paving)" height="12" width="800" x="0" y="302"></rect>
+<rect fill="url(#tactile-paving)" height="12" width="800" x="0" y="376"></rect>
+<!-- Diagonal Pedestrian Promenade -->
+<path d="M 480,0 L 520,0 L 520,1000 L 480,1000 Z" fill="#dae2fd"></path>
+<path d="M 474,0 L 482,0 L 482,1000 L 474,1000 Z" fill="url(#tactile-paving)"></path>
+<!-- Tactile Safe Crosswalks (Ramps available at curb cuts) -->
+<rect fill="url(#crosswalk)" height="58" width="68" x="246" y="316"></rect>
+<rect fill="url(#crosswalk)" height="58" width="48" x="476" y="316"></rect>
+<!-- Transit Line & Metro Accessible Hubs -->
+<path d="M 0,160 L 800,160" stroke="#005d42" stroke-dasharray="16,8" stroke-width="8"></path>
+<!-- Metro Station 1: 28 May -->
+<g transform="translate(260, 140)">
+<rect fill="#005d42" height="40" rx="8" width="40" x="0" y="0"></rect>
+<text fill="#ffffff" font-family="Inter" font-size="20" font-weight="bold" text-anchor="middle" x="20" y="27">M</text>
+</g>
+<!-- Metro Station 2: Sahil -->
+<g transform="translate(485, 140)">
+<rect fill="#005d42" height="40" rx="8" width="40" x="0" y="0"></rect>
+<text fill="#ffffff" font-family="Inter" font-size="20" font-weight="bold" text-anchor="middle" x="20" y="27">M</text>
+</g>
+<!-- Street Label Badges -->
+<g transform="translate(70, 345)">
+<rect fill="#131b2e" height="24" opacity="0.8" rx="6" width="150" x="0" y="0"></rect>
+<text fill="#ffffff" font-family="Inter" font-size="12" font-weight="bold" text-anchor="middle" x="75" y="17">NİZAMİ KÜÇƏSİ (PİYADA)</text>
+</g>
+<g transform="translate(210, 40) rotate(90)">
+<rect fill="#131b2e" height="24" opacity="0.8" rx="6" width="140" x="0" y="0"></rect>
+<text fill="#ffffff" font-family="Inter" font-size="12" font-weight="bold" text-anchor="middle" x="70" y="17">RƏŞİD BEHBUDOV PR.</text>
+</g>
+</svg>
