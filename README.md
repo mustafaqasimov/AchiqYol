@@ -1,4 +1,4 @@
-# AchiqYol
+# AçıqYol
 
 Java 21 / Spring Boot 3 / PostgreSQL / Redis / Next.js / Tailwind / Leaflet.
 

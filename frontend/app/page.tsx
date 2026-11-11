@@ -179,7 +179,7 @@ export default function Home() {
               <Icon name="access" />
             </span>
             <span>
-              <strong>AchiqYol</strong>
+              <strong>AçıqYol</strong>
               <small>Hər kəs üçün açıq yol</small>
             </span>
           </a>
