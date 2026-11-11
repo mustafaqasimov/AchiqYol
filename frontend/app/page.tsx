@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Icon from "../components/Icon";
 import InstallApp from "../components/InstallApp";
+import AddPlace from "../components/AddPlace";
 import { demoPlaces, labels, Place } from "../lib/places";
 const Map = dynamic(() => import("../components/Map"), { ssr: false });
 export default function Home() {
@@ -108,8 +109,12 @@ export default function Home() {
     }
     window.speechSynthesis.cancel();
     const s = new SpeechSynthesisUtterance(
-      visible.map((p) => `${p.name}. ${labels[p.color]}`).join(". ") ||
-        "Məkan tapılmadı",
+      visible
+        .map(
+          (p) =>
+            `${p.name}. ${p.assessmentSource === "AI" ? "AI · İlkin vizual qiymət" : labels[p.color]}`,
+        )
+        .join(". ") || "Məkan tapılmadı",
     );
     s.lang = "az-AZ";
     window.speechSynthesis.speak(s);
@@ -120,7 +125,9 @@ export default function Home() {
         <Icon name={p.color === "GREEN" ? "access" : "map"} />
         <span className="badge">
           <span className="dot" />
-          {labels[p.color]}
+          {p.assessmentSource === "AI"
+            ? "AI · İlkin vizual qiymət"
+            : labels[p.color]}
         </span>
       </div>
     );
@@ -141,7 +148,16 @@ export default function Home() {
             <strong>{p.rating?.toFixed(1) ?? "—"}</strong>
             <span className="muted">({p.reviewCount} rəy)</span>
           </div>
+          {p.assessmentSource === "AI" && (
+            <span className="ai-label">
+              <Icon name="sparkles" />
+              İlkin AI qiymətləndirməsi · audit deyil
+            </span>
+          )}
           <p className="muted text-sm">{p.description}</p>
+          {p.assessmentSource === "AI" && (
+            <p className="muted text-sm">{p.aiSummary}</p>
+          )}
           <button
             className="primary wide"
             onClick={() => {
@@ -175,9 +191,13 @@ export default function Home() {
       <header className="app-header">
         <div className="header-inner">
           <a className="brand" href="/">
-            <span className="brand-mark">
-              <Icon name="access" />
-            </span>
+            <img
+              className="brand-logo"
+              src="/brand/logo.svg"
+              alt=""
+              width="52"
+              height="52"
+            />
             <span>
               <strong>AçıqYol</strong>
               <small>Hər kəs üçün açıq yol</small>
@@ -189,11 +209,11 @@ export default function Home() {
           </div>
           <button
             className="primary header-add"
-            onClick={() => open("experience")}
-            aria-label="Təcrübəni bölüş"
+            onClick={() => open("add")}
+            aria-label="Məkan əlavə et"
           >
             <Icon name="plus" />
-            <span>Təcrübəni bölüş</span>
+            <span>Məkan əlavə et</span>
           </button>
           <button
             className="icon-button avatar"
@@ -208,9 +228,10 @@ export default function Home() {
         <div className="intro">
           <div>
             <p className="eyebrow">BAKI · ƏLÇATANLIQ XƏRİTƏSİ</p>
-            <h1>Şəhər hər kəs üçündür.</h1>
+            <h1>Açıq yollar. Sərbəst həyat.</h1>
             <p className="muted">
-              Əlçatan məkanları kəşf et, öz yolunu inamla seç.
+              Bir şəkil paylaş, görünən maneələri anlamağa kömək et. Şəhəri
+              birlikdə daha əlçatan edək.
             </p>
           </div>
           <button
@@ -280,7 +301,7 @@ export default function Home() {
                             top: `${50 + (coords[1] - 50) * zoom}%`,
                           }}
                           onClick={() => setSelected(p.id)}
-                          aria-label={`${p.name}, ${labels[p.color]}`}
+                          aria-label={`${p.name}, ${p.assessmentSource === "AI" ? "AI · İlkin vizual qiymət" : labels[p.color]}`}
                           aria-pressed={place?.id === p.id}
                         >
                           <span className="pin-bubble">
@@ -332,7 +353,11 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                <Map places={visible} onSelect={setSelected} />
+                <Map
+                  places={visible}
+                  onSelect={setSelected}
+                  selected={selected}
+                />
               )}
               <div className="map-label">
                 <span className="dot GREEN" />
@@ -389,6 +414,12 @@ export default function Home() {
                   {place.reviewCount} rəy
                 </div>
                 <p className="muted">{place.description}</p>
+                {place.aiSummary && (
+                  <div className="note">
+                    <strong>İlkin AI qeydləri · audit deyil</strong>
+                    <p>{place.aiSummary}</p>
+                  </div>
+                )}
                 <div className="actions">
                   <button
                     className="secondary"
@@ -411,7 +442,8 @@ export default function Home() {
               <h3>Əlçatanlıq məlumatları</h3>
               <p>
                 Pandus, qapı eni, lift və sanitar qovşaq barədə təsdiqlənmiş
-                audit məlumatı hələ yoxdur. Rəng yalnız orta reytinqə əsaslanır.
+                audit məlumatı hələ yoxdur. Rəng icma reytinqinə və ya ayrıca
+                işarələnmiş ilkin AI qiymətləndirməsinə əsaslanır.
               </p>
             </div>
             <button className="primary wide" onClick={() => open("route")}>
@@ -474,13 +506,15 @@ export default function Home() {
       >
         <div className="dialog-head">
           <h2 id="dialog-title">
-            {modal === "experience"
-              ? "Təcrübəni bölüş"
-              : modal === "report"
-                ? "Maneə bildir"
-                : modal === "route"
-                  ? "Ən rahat yol"
-                  : "Sənin profilin"}
+            {modal === "add"
+              ? "Şəkildən xəritəyə"
+              : modal === "experience"
+                ? "Təcrübəni bölüş"
+                : modal === "report"
+                  ? "Maneə bildir"
+                  : modal === "route"
+                    ? "Ən rahat yol"
+                    : "Sənin profilin"}
           </h2>
           <button
             className="icon-button"
@@ -491,7 +525,29 @@ export default function Home() {
           </button>
         </div>
         <div className="dialog-content">
-          {modal === "experience" || modal === "report" ? (
+          {modal === "add" ? (
+            <AddPlace
+              onAdded={(p) => {
+                setPlaces((current) => [
+                  p,
+                  ...current.filter((item) => item.id !== p.id),
+                ]);
+                setDemo(false);
+                setFilter("");
+                setQuery("");
+                setSelected(p.id);
+                setView("map");
+                setStatus("");
+                setModal("");
+                setMessage(
+                  "Məkan ilkin AI qiymətləndirməsi ilə xəritəyə əlavə edildi.",
+                );
+                const url = new URL(window.location.href);
+                url.searchParams.delete("demo");
+                window.history.replaceState({}, "", url);
+              }}
+            />
+          ) : modal === "experience" || modal === "report" ? (
             <form
               key={modal}
               className="grid gap-4"

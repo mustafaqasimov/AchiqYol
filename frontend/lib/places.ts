@@ -7,6 +7,8 @@ export type Place = {
   rating: number | null;
   reviewCount: number;
   color: string;
+  assessmentSource?: "AI" | "COMMUNITY" | "UNRATED";
+  aiSummary?: string;
 };
 export const labels: Record<string, string> = {
   GREEN: "Tam əlçatan",

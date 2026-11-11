@@ -36,6 +36,10 @@ services:
     build: ./frontend
     environment:
       BACKEND_URL: http://backend:8080
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_VISION_MODEL: ${OPENAI_VISION_MODEL:-gpt-4.1-mini}
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD}
     ports: ['3000:3000']
     depends_on: [backend]
 volumes:

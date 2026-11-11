@@ -1,5 +1,23 @@
 import type { CSSProperties } from "react";
 const paths: Record<string, React.ReactNode> = {
+  camera: (
+    <>
+      <path d="M3 7h4l2-3h6l2 3h4v14H3z" />
+      <circle cx="12" cy="13" r="4" />
+    </>
+  ),
+  photo: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <circle cx="8" cy="8" r="1" />
+      <path d="m3 17 5-5 4 4 4-7 5 8" />
+    </>
+  ),
+  sparkles: (
+    <>
+      <path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5zM21 2v4M19 4h4" />
+    </>
+  ),
   search: (
     <>
       <circle cx="10" cy="10" r="6" />

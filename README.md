@@ -129,7 +129,7 @@ frontend/tsconfig.json
 - `docker compose --env-file .env.example config -q`: passed.
 - `npm run build`: passed (Next.js 15.5.29, TypeScript checked).
 - Production frontend HTTP request: 200.
-- Backend tests: not executed; compiler reports `release version 21 not supported`. This machine has a Java 21 runtime but no Java 21 javac; the package installer cannot run because sudo is unavailable. The Docker build uses a full Java 21 JDK.
+- Backend tests: subsequently compiled and passed using the Maven / Temurin 21 Docker image (2 tests, 0 failures).
 - Full Compose startup, database migration execution, browser accessibility audit and native PWA install have not been verified.
 
 ## Mock data / Demo məlumatlar
@@ -176,3 +176,49 @@ and account dialogs explicitly identify services that are not implemented.
 Validation: production build passed; Chromium desktop (1440px) and mobile (390px)
 checks passed for filters, search, details, bookmarks, dialogs, draft submission,
 and horizontal overflow. Full accessibility certification is not claimed.
+
+## Photo → AI assessment → map
+
+Use **Məkan əlavə et** to choose a JPEG/PNG/WebP or take a camera photo. The browser
+resizes it to at most 1280px and re-encodes JPEG, dropping EXIF metadata. After
+explicit consent, the server sends the image to OpenAI; it never exposes the API
+key to the browser. Photos are not retained in PostgreSQL. The confirmed place,
+coordinates, preliminary color and AI notes are persisted through the existing
+admin-protected Location API. The map focuses on the new marker. Community
+reviews take precedence over the preliminary AI color when reviews exist.
+
+For Docker, fill these server variables in the root `.env` and recreate services:
+
+```env
+OPENAI_API_KEY=your-key-entered-locally
+OPENAI_VISION_MODEL=gpt-4.1-mini
+ADMIN_USER=admin
+ADMIN_PASSWORD=your-strong-password
+```
+
+```sh
+docker compose up --build -d
+```
+
+For frontend development, copy `frontend/.env.example` to `frontend/.env.local`,
+set the same admin credentials as the backend and your own OpenAI key, then
+restart `npm run dev`. Never put credentials in `NEXT_PUBLIC_*`, screenshots or
+Git. Add-place uses admin credentials entered in the form; they are not stored
+in localStorage. Public user accounts are not implemented. Deploy with HTTPS.
+
+`POST /api/accessibility` verifies admin authentication, limits the body size,
+checks image signatures, calls structured vision output, validates its response,
+and forces uncertain/low-confidence findings to GREY. Text found in images is
+untrusted. The AI describes visible features and unknowns; it cannot certify a
+whole building, measure an unseen slope or guarantee a safe route. New columns
+are added through Liquibase changeSet `002-ai-assessment`.
+
+The downloadable HTML is a visual/offline preview only: photo selection works,
+but it cannot call AI or publish to the shared map. AI API credentials were not
+available during implementation. Provider behavior was tested with controlled
+fixtures; real image interpretation still requires a configured key and live test.
+
+Checks: `node --experimental-strip-types --test tests/accessibility.test.mjs`
+(from frontend, Node 22.18+), `npm run build`, backend Maven tests, and browser
+photo-upload → mocked AI → saved marker checks. No fabricated AI results are used
+in the shipped app when the provider is unavailable.
